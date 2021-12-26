@@ -1,9 +1,7 @@
-export interface IMovie {
-  id?: number
+export interface ICreateMovieDTO {
   name: string
   kind: string
   imgUrl: string
   stopsPlaying?: string
   release?: string
-  hasStoppedPlaying?: boolean
 }

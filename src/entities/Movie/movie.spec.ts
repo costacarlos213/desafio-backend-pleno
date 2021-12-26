@@ -3,14 +3,15 @@ import { Movie } from "./Movie"
 
 describe("Create new movie tests", () => {
   test("New Movie", () => {
-    expect(() => {
+    expect(
       Movie.create({
         name: "Kung fu panda",
         kind: "Cartoon",
+        imgUrl: "http://img.url.com/img.jpg",
         release: dayjs().toISOString(),
         stopsPlaying: dayjs().add(1, "month").toISOString()
       })
-    }).not.toThrowError()
+    ).toBeInstanceOf(Movie)
   })
 
   test("Too long name", () => {
@@ -24,6 +25,7 @@ describe("Create new movie tests", () => {
       Movie.create({
         name,
         kind: "Cartoon",
+        imgUrl: "http://img.url.com/img.jpg",
         release: dayjs().toISOString(),
         stopsPlaying: dayjs().add(1, "month").toISOString()
       })
@@ -35,9 +37,32 @@ describe("Create new movie tests", () => {
       Movie.create({
         name: "Kung fu panda",
         kind: "Cartoon",
+        imgUrl: "http://img.url.com/img.jpg",
         release: dayjs().toISOString(),
         stopsPlaying: dayjs().toISOString()
       })
     }).toThrowError()
+  })
+
+  test("Same release and stops playing date", () => {
+    expect(() => {
+      Movie.create({
+        name: "Kung fu panda",
+        kind: "Cartoon",
+        imgUrl: "http://img.url.com/img.jpg",
+        release: dayjs().toISOString(),
+        stopsPlaying: dayjs().toISOString()
+      })
+    }).toThrowError()
+  })
+
+  test("No release and 'stops playing' date", () => {
+    expect(() => {
+      Movie.create({
+        name: "Kung fu panda",
+        kind: "Cartoon",
+        imgUrl: "http://img.url.com/img.jpg"
+      })
+    }).not.toThrowError()
   })
 })
