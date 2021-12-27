@@ -8,6 +8,6 @@ interface IUpdateFields {
 }
 
 export interface IUpdateMovieDTO {
-  id: string
+  id: number
   fields: IUpdateFields
 }

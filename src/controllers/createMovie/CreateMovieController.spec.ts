@@ -1,8 +1,19 @@
 import { app } from "../../app"
 import request from "supertest"
 import dayjs from "dayjs"
+import { pool } from "@config/database/pool"
 
 describe("Create Movie Controller", () => {
+  afterAll(async () => {
+    await pool.query("TRUNCATE movies RESTART IDENTITY CASCADE;", async err => {
+      if (err) {
+        console.log(err)
+      }
+
+      await pool.end()
+    })
+  })
+
   it("Should be able to create new movie", async () => {
     const response = await request(app).post("/movie").send({
       name: "Kung fu panda",
@@ -11,7 +22,7 @@ describe("Create Movie Controller", () => {
     })
 
     expect(response.status).toBe(201)
-    expect(response.body).toHaveProperty("Id")
+    expect(response.body).toHaveProperty("id")
   })
 
   it("Should be able to create new movie with all params", async () => {
@@ -26,7 +37,7 @@ describe("Create Movie Controller", () => {
       })
 
     expect(response.status).toBe(201)
-    expect(response.body).toHaveProperty("Id")
+    expect(response.body).toHaveProperty("id")
   })
 
   it("Should not be able to create movie without name", async () => {

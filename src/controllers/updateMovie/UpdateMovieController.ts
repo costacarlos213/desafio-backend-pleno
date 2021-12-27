@@ -8,7 +8,7 @@ class UpdateMovieController {
     const { id, fields } = req.body
 
     try {
-      const updatedMovie = this.updateMovieUseCase.execute({
+      const updatedMovie = await this.updateMovieUseCase.execute({
         id,
         fields
       })

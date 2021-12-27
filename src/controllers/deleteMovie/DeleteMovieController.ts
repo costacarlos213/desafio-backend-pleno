@@ -6,8 +6,8 @@ class DeleteMovieController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     try {
-      const deletedMoviedId = this.deleteMovieUseCase.execute(
-        req.query.id?.toString()
+      const deletedMoviedId = await this.deleteMovieUseCase.execute(
+        req.params.id?.toString()
       )
 
       return res.status(200).json({

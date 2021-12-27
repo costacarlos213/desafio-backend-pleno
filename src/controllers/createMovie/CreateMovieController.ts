@@ -10,7 +10,7 @@ class CreateMovieController {
       req.body as ICreateMovieDTO
 
     try {
-      const movie = await this.createMovieUseCase.execute({
+      const movieId = await this.createMovieUseCase.execute({
         imgUrl,
         kind,
         name,
@@ -18,7 +18,7 @@ class CreateMovieController {
         stopsPlaying
       })
 
-      return res.status(201).json(movie)
+      return res.status(201).json(movieId)
     } catch (error) {
       return res.status(400).json({
         message: error.message

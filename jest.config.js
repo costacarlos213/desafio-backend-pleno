@@ -8,6 +8,7 @@ module.exports = {
     "@repositories/(.*)$": "<rootDir>/repositories/$1",
     "@useCases/(.*)$": "<rootDir>/useCases/$1",
     "@controllers/(.*)$": "<rootDir>/controllers/$1",
+    "@config/(.*)$": "<rootDir>/config/$1",
   },
   roots: [
     "<rootDir>"

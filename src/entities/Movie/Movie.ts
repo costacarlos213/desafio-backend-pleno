@@ -1,4 +1,3 @@
-import dayjs from "dayjs"
 import { IMovie } from "./IMovie"
 
 class Movie {
@@ -10,17 +9,36 @@ class Movie {
     public readonly StopsPlaying?: string,
     public readonly Release?: string,
     public readonly Id?: number
-  ) {
-    if (!Release) {
-      this.Release = dayjs().toISOString()
-    }
-  }
+  ) {}
 
   static create(movie: IMovie): Movie {
     const { id, name, kind, stopsPlaying, hasStoppedPlaying, release, imgUrl } =
       movie
 
-    if (!name || !kind || !imgUrl) {
+    const escapedName = name?.replace(/[^a-zA-Z0-9:,%.\-/ áàãâéêíõóúç]/g, "")
+    const escapedKind = kind?.replace(/[^a-zA-Z0-9:,%.\-/ áàãâéêíõóúç]/g, "")
+
+    this.validate({
+      ...movie,
+      name: escapedName,
+      kind: escapedKind
+    })
+
+    return new Movie(
+      escapedName,
+      escapedKind,
+      imgUrl,
+      hasStoppedPlaying,
+      stopsPlaying,
+      release,
+      id
+    )
+  }
+
+  private static validate(movie: IMovie) {
+    const { name, kind, stopsPlaying, release, imgUrl } = movie
+
+    if (!name || !kind || !imgUrl || name.length === 0 || kind.length === 0) {
       throw new Error("Missing movie name, kind or image url.")
     }
 
@@ -33,16 +51,6 @@ class Movie {
     if (release && stopsPlaying && release === stopsPlaying) {
       throw new Error(`Release date and "stops playing date" can't be the same`)
     }
-
-    return new Movie(
-      name,
-      kind,
-      imgUrl,
-      hasStoppedPlaying,
-      stopsPlaying,
-      release,
-      id
-    )
   }
 }
 

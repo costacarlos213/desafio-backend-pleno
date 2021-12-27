@@ -7,12 +7,12 @@ class GetMoviesController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const filters: IFilters = {
-      hasStoppedPlaying: !!req.query.hasStoppedPlaying,
-      id: parseInt(req.query.id?.toString()),
-      name: req.query.name?.toString(),
-      kind: req.query.kind?.toString(),
-      release: req.query.release?.toString(),
-      stopsPlaying: req.query.stopsPlaying?.toString()
+      hasStoppedPlaying: !!req.query?.hasStoppedPlaying,
+      id: parseInt(req.query?.id?.toString()) || undefined,
+      name: req.query?.name?.toString(),
+      kind: req.query?.kind?.toString(),
+      release: req.query?.release?.toString(),
+      pagination: parseInt(req.query?.pagination?.toString()) || undefined
     }
 
     try {

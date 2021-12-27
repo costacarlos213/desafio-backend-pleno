@@ -21,7 +21,8 @@
       "@entities/*": ["./src/entities/*"],
       "@repositories/*": ["./src/repositories/*"],
       "@controllers/*": ["./src/controllers/*"],
-      "@useCases/*": ["./src/useCases/*"]
+      "@useCases/*": ["./src/useCases/*"],
+      "@config/*": ["./src/config/*"]
     }
   },
   "include": ["src/**/*"],

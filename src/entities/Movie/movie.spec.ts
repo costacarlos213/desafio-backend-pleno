@@ -33,13 +33,15 @@ describe("Create new movie tests", () => {
   })
 
   test("Same release and stops playing date", () => {
+    const now = dayjs().toISOString()
+
     expect(() => {
       Movie.create({
         name: "Kung fu panda",
         kind: "Cartoon",
         imgUrl: "http://img.url.com/img.jpg",
-        release: dayjs().toISOString(),
-        stopsPlaying: dayjs().toISOString()
+        release: now,
+        stopsPlaying: now
       })
     }).toThrowError()
   })

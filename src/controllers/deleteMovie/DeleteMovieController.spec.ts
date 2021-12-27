@@ -1,15 +1,15 @@
+import request from "supertest"
+
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 
 import { pool } from "@config/database/pool"
-import { MovieRepository } from "@repositories/movieRepository/implementation/MovieRepository"
-import { DeleteMovieUseCase } from "./DeleteMovieUseCase"
+
+import { app } from "../../app"
 
 dayjs.extend(utc)
 
-describe("Delete Movie", () => {
-  let movieRepository: MovieRepository
-  let deleteMovieUseCase: DeleteMovieUseCase
+describe("Delete Movie Controller", () => {
   let movieId: number
 
   beforeAll(async () => {
@@ -23,9 +23,6 @@ describe("Delete Movie", () => {
         "http://img.url.com/img.jpg"
       ]
     )
-
-    movieRepository = new MovieRepository()
-    deleteMovieUseCase = new DeleteMovieUseCase(movieRepository)
 
     movieId = rows[0].id_movie
   })
@@ -41,16 +38,22 @@ describe("Delete Movie", () => {
   })
 
   it("Should be able to delete movie", async () => {
-    const deletedId = await deleteMovieUseCase.execute(movieId.toString())
+    const response = await request(app).delete(`/movie/${movieId}`)
 
-    expect(deletedId).toEqual(movieId)
+    expect(response.status).toEqual(200)
+    expect(response.body.id).toEqual(movieId)
   })
 
-  it("Should not be able to delete movie without id", async () => {
-    const unknownId = undefined
+  it("Should not be able to delete unknkown id", async () => {
+    const response = await request(app).delete("/movie/9999")
 
-    await expect(deleteMovieUseCase.execute(unknownId)).rejects.toEqual(
-      new Error("Missing movie id.")
-    )
+    expect(response.status).toEqual(400)
+    expect(response.body.message).toEqual("Trying to delete unknown id.")
+  })
+
+  it("Should not be able to find route", async () => {
+    const response = await request(app).delete("/movie")
+
+    expect(response.status).toEqual(404)
   })
 })

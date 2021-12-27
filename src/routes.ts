@@ -20,7 +20,7 @@ router.put("/movie", async (req, res) => {
   return await updateMovieController.handle(req, res)
 })
 
-router.delete("/movie", async (req, res) => {
+router.delete("/movie/:id", async (req, res) => {
   return await deleteMovieController.handle(req, res)
 })
 

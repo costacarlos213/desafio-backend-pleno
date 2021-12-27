@@ -3,6 +3,6 @@ export interface IFilters {
   name?: string
   kind?: string
   release?: string
-  stopsPlaying?: string
   hasStoppedPlaying?: boolean
+  pagination?: number
 }
