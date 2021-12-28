@@ -44,7 +44,7 @@ describe("Get Movies Controller", () => {
   })
 
   it("Should return an array with all movies", async () => {
-    const response = await request(app).get("/movie")
+    const response = await request(app).get("/movie?hasStoppedPlaying=both")
 
     expect(response.status).toBe(200)
     expect(Array.isArray(response.body)).toBeTruthy()
@@ -52,7 +52,9 @@ describe("Get Movies Controller", () => {
   })
 
   it("Should return the second page of movies", async () => {
-    const response = await request(app).get("/movie?pagination=2")
+    const response = await request(app).get(
+      "/movie?pagination=2&hasStoppedPlaying=both"
+    )
 
     expect(response.status).toBe(200)
     expect(Array.isArray(response.body)).toBeTruthy()
@@ -75,8 +77,26 @@ describe("Get Movies Controller", () => {
     expect(response.body.length).toEqual(1)
   })
 
+  it("Should return every movie that is playing (implicit param)", async () => {
+    const response = await request(app).get("/movie")
+
+    expect(response.status).toBe(200)
+    expect(Array.isArray(response.body)).toBeTruthy()
+    expect(response.body.length).toEqual(10)
+  })
+
+  it("Should return every movie that is playing (explicit param)", async () => {
+    const response = await request(app).get("/movie?hasStoppedPlaying=false")
+
+    expect(response.status).toBe(200)
+    expect(Array.isArray(response.body)).toBeTruthy()
+    expect(response.body.length).toEqual(10)
+  })
+
   it("Should return every movie with the number 5", async () => {
-    const response = await request(app).get("/movie?name=5")
+    const response = await request(app).get(
+      "/movie?name=5&hasStoppedPlaying=both"
+    )
 
     expect(response.status).toBe(200)
     expect(Array.isArray(response.body)).toBeTruthy()
@@ -85,7 +105,7 @@ describe("Get Movies Controller", () => {
 
   it("Should intepret url encoding", async () => {
     const response = await request(app).get(
-      "/movie?name=Miss%C3%A3o%20Imposs%C3%ADvel"
+      "/movie?name=Miss%C3%A3o%20Imposs%C3%ADvel&hasStoppedPlaying=both"
     )
 
     expect(response.status).toBe(200)

@@ -1,5 +1,4 @@
 import { Movie } from "@entities/Movie/Movie"
-import { IFilters } from "@useCases/getMovies/GetMoviesDTO"
 import { IUpdateMovieDTO } from "@useCases/updateMovie/UpdateMovieDTO"
 
 /* eslint-disable */ 
@@ -13,6 +12,16 @@ export interface IDatabaseMovie {
   img_url: string
 }
 /* eslint-enable */
+
+export interface IFilters {
+  id?: number
+  name?: string
+  kind?: string
+  release?: string
+  stopsPlaying?: string
+  hasStoppedPlaying?: boolean
+  pagination?: number
+}
 
 export interface IMovieRepository {
   save(movie: Movie): Promise<{ id: number }>

@@ -22,7 +22,7 @@ describe("Create new movie tests", () => {
     }
 
     expect(() => {
-      Movie.create({
+      Movie.validate({
         name,
         kind: "Cartoon",
         imgUrl: "http://img.url.com/img.jpg",
@@ -36,7 +36,7 @@ describe("Create new movie tests", () => {
     const now = dayjs().toISOString()
 
     expect(() => {
-      Movie.create({
+      Movie.validate({
         name: "Kung fu panda",
         kind: "Cartoon",
         imgUrl: "http://img.url.com/img.jpg",
@@ -46,25 +46,35 @@ describe("Create new movie tests", () => {
     }).toThrowError()
   })
 
-  test("Same release and stops playing date", () => {
-    expect(() => {
-      Movie.create({
-        name: "Kung fu panda",
-        kind: "Cartoon",
-        imgUrl: "http://img.url.com/img.jpg",
-        release: dayjs().toISOString(),
-        stopsPlaying: dayjs().toISOString()
-      })
-    }).toThrowError()
-  })
-
   test("No release and 'stops playing' date", () => {
     expect(() => {
-      Movie.create({
+      Movie.validate({
         name: "Kung fu panda",
         kind: "Cartoon",
         imgUrl: "http://img.url.com/img.jpg"
       })
     }).not.toThrowError()
+  })
+
+  it("Should be able to use numbers and portuguese special chars in title", () => {
+    const movie = Movie.create({
+      name: "300: A ascenção do império",
+      kind: "Ação",
+      imgUrl: "http://img.url.com/img.jpg"
+    })
+
+    expect(movie.Name).toEqual("300: A ascenção do império")
+    expect(movie.Kind).toEqual("Ação")
+  })
+
+  it("Should be able to remove special chars", () => {
+    const movie = Movie.create({
+      name: "M#i%¨*&ssã!o Im>po<ssí@vel()",
+      kind: "Ação",
+      imgUrl: "http://img.url.com/img.jpg"
+    })
+
+    expect(movie.Name).toEqual("Missão Impossível")
+    expect(movie.Kind).toEqual("Ação")
   })
 })

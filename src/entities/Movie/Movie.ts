@@ -15,8 +15,8 @@ class Movie {
     const { id, name, kind, stopsPlaying, hasStoppedPlaying, release, imgUrl } =
       movie
 
-    const escapedName = name?.replace(/[^a-zA-Z0-9:,%.\-/ áàãâéêíõóúç]/g, "")
-    const escapedKind = kind?.replace(/[^a-zA-Z0-9:,%.\-/ áàãâéêíõóúç]/g, "")
+    const escapedName = name?.replace(/[^a-zA-Z0-9:,.\-/ áàãâéêíõóúç]/g, "")
+    const escapedKind = kind?.replace(/[^a-zA-Z0-9:,.\-/ áàãâéêíõóúç]/g, "")
 
     this.validate({
       ...movie,
@@ -35,7 +35,7 @@ class Movie {
     )
   }
 
-  private static validate(movie: IMovie) {
+  static validate(movie: IMovie): void {
     const { name, kind, stopsPlaying, release, imgUrl } = movie
 
     if (!name || !kind || !imgUrl || name.length === 0 || kind.length === 0) {

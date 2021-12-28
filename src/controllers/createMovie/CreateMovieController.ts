@@ -6,12 +6,12 @@ class CreateMovieController {
   constructor(private createMovieUseCase: CreateMovieUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { imgUrl, kind, name, release, stopsPlaying } =
-      req.body as ICreateMovieDTO
+    const { kind, name, release, stopsPlaying } = req.body as ICreateMovieDTO
 
     try {
       const movieId = await this.createMovieUseCase.execute({
-        imgUrl,
+        imgUrl: req.files[0].location,
+        file: req.files[0],
         kind,
         name,
         release,

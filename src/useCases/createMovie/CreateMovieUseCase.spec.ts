@@ -1,25 +1,13 @@
-import { pool } from "@config/database/pool"
-import { MovieRepository } from "@repositories/movieRepository/implementation/MovieRepository"
+import { MovieRepositoryMock } from "@repositories/movieRepository/implementation/MovieRepositoryMock"
 import { ICreateMovieDTO } from "./CreateMovieDTO"
 import { CreateMovieUseCase } from "./CreateMovieUseCase"
 
 describe("Create Movie Tests", () => {
-  let movieRepository
   let createMovieUseCase
 
   beforeAll(() => {
-    movieRepository = new MovieRepository()
+    const movieRepository = new MovieRepositoryMock()
     createMovieUseCase = new CreateMovieUseCase(movieRepository)
-  })
-
-  afterAll(async () => {
-    await pool.query("TRUNCATE movies RESTART IDENTITY CASCADE;", async err => {
-      if (err) {
-        console.log(err)
-      }
-
-      await pool.end()
-    })
   })
 
   it("Should be able to create movie", async () => {

@@ -19,7 +19,7 @@ class UpdateMovieUseCase {
 
       if (key !== "hasStoppedPlaying") {
         fields[key] = fields[key]?.replace(
-          /[^a-zA-Z0-9:,%.\-/ áàãâéêíõóúç]/g,
+          /[^a-zA-Z0-9:,.\-/ áàãâéêíõóúç]/g,
           ""
         )
       }

@@ -1,8 +1,9 @@
-export interface IFilters {
-  id?: number
+export interface IGetMoviesDTO {
+  id?: string
   name?: string
   kind?: string
   release?: string
-  hasStoppedPlaying?: boolean
-  pagination?: number
+  stopsPlaying?: string
+  hasStoppedPlaying?: string
+  pagination?: string
 }
