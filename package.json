@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node build/server.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules src/server.ts",
-    "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files",
-    "test": "jest"
+    "dev": "env-cmd -f .env ts-node-dev -r tsconfig-paths/register --transpile-only --respawn --ignore-watch node_modules src/server.ts",
+    "build": "env-cmd -f .env babel src --extensions \".js,.ts\" --out-dir build --copy-files",
+    "test": "env-cmd -f .env jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -20,6 +20,7 @@
     "@types/jest": "^27.0.3",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/multer": "^1.4.7",
+    "@types/multer-s3": "^2.7.11",
     "@types/node-cron": "^3.0.0",
     "@types/pg": "^8.6.3",
     "@types/supertest": "^2.0.11",
@@ -48,6 +49,7 @@
     "cookie-parser": "^1.4.6",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",

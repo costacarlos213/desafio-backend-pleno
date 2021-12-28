@@ -3,12 +3,11 @@ import path from "path"
 import { v4 } from "uuid"
 import aws from "aws-sdk"
 import multerS3 from "multer-s3"
-import { Request } from "express"
 
 const storageTypes = {
   local: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, path.resolve(__dirname, "..", "..", "public", "uploads"))
+      cb(null, path.resolve(__dirname, "..", "public", "uploads"))
     },
 
     filename: (req, file, cb) => {
@@ -30,7 +29,6 @@ const storageTypes = {
     acl: "public-read",
     key: (req, file, cb) => {
       const fileName = `${v4()}@${file.originalname
-        .replace(" ", "-")
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")}`
 
@@ -42,11 +40,8 @@ const storageTypes = {
 export const multerConfig = {
   dest: path.resolve(__dirname, "..", "public", "uploads"),
   storage: storageTypes.s3,
-  limits: {
-    fileSize: 2 * 1024 * 1024
-  },
   fileFilter: (
-    req: Request,
+    req,
     file: Express.Multer.File,
     cb: (error: Error, isValid: boolean) => void
   ): void => {

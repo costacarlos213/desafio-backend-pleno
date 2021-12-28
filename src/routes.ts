@@ -12,6 +12,22 @@ import { verifyToken } from "./middlewares/verifyToken"
 
 const router = Router()
 
+// User Routes
+
+router.post("/user", verifyToken, async (req, res) => {
+  return await createUserController.handle(req, res)
+})
+
+// Auth Routes
+
+router.post("/auth", async (req, res) => {
+  return await loginUserController.handle(req, res)
+})
+
+router.get("/token", verifyRefreshToken, async (req, res) => {
+  return await refreshTokenController.handle(req, res)
+})
+
 // Movie Routes
 
 router.post("/movie", [verifyToken, uploadFileMiddleware], async (req, res) => {
@@ -28,22 +44,6 @@ router.put("/movie", [verifyToken, uploadFileMiddleware], async (req, res) => {
 
 router.delete("/movie/:id", verifyToken, async (req, res) => {
   return await deleteMovieController.handle(req, res)
-})
-
-// User Routes
-
-router.post("/user", verifyToken, async (req, res) => {
-  return await createUserController.handle(req, res)
-})
-
-// Auth Routes
-
-router.post("/auth", async (req, res) => {
-  return await loginUserController.handle(req, res)
-})
-
-router.get("/token", verifyRefreshToken, async (req, res) => {
-  return await refreshTokenController.handle(req, res)
 })
 
 export { router }

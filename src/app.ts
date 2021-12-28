@@ -1,9 +1,8 @@
 import express, { json } from "express"
-import path from "path"
-import dotenv from "dotenv"
-import cookieParser from "cookie-parser"
-
+import * as dotenv from "dotenv"
 import { router } from "./routes"
+import path from "path"
+import cookieParser from "cookie-parser"
 
 const app = express()
 
